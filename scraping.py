@@ -20,7 +20,7 @@ try:
     # auto scroll down
     i = 0
     y = 0
-    while y<2:
+    while y<1:
         driver.execute_script("window.scrollBy(0,200000)","")
         time.sleep(1)
         i=i+1
@@ -38,9 +38,10 @@ try:
         comment = data.find_element_by_css_selector('span[jsname="fbQN7e"]')
         driver.execute_script("arguments[0].removeAttribute('style')", comment)
         comment = data.find_element_by_css_selector('span[jsname="fbQN7e"]')
-        if len(comment.text) == 0 : continue
+        data = comment.text
+        if data == "" : continue
         count= count+1
-        print (comment.text,'\n')
+        print (data,'\n')
     print(count)
 except :
     driver.quit()
