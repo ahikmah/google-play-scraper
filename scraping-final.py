@@ -21,7 +21,7 @@ driver = webdriver.Chrome(PATH)
 def exportfile (dataset):
     comment_list = list(dataset)
     df = pd.DataFrame(data={'comment':comment_list})
-    df.to_csv('./bismillah1.csv', mode='a', header =False, index =False)
+    df.to_csv('./datasets.csv', mode='a', header =False, index =False)
     print('all data has been successfully exported')
 
 # get URL
