@@ -17,7 +17,7 @@ start = time.time()
 
 namefile = input('Input file name to export data : ')
 # lazyload = input("Number of looping lazy load : ")
-count = input("Number of data : ")
+count = input("Amount of data : ")
 
 PATH = "C:\\Program Files (x86)\\chromedriver.exe"
 driver = webdriver.Chrome(PATH)
@@ -29,7 +29,7 @@ def exportfile (dataset):
 
 def scrolldown():
     i = 0
-    for i in range(12):
+    for i in range(20):
         time.sleep(1)
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')               
         i = i+1
