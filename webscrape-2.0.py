@@ -25,7 +25,7 @@ driver = webdriver.Chrome(PATH)
 def exportfile (dataset):
     comment_list = list(dataset)
     df = pd.DataFrame(data={'comment':comment_list})
-    df.to_csv(namefile+'.csv', mode='a', header =False, index =False)
+    df.to_csv(namefile+'.csv', mode='a', header=False, index=False)
 
 def scrolldown():
     i = 0
@@ -43,14 +43,12 @@ try:
     root = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME,'LXrl4c'))
     )
-    
-  
          
     while len(comment_set) < int(count):
         try:
             i = 0
-            button = driver.find_element_by_css_selector('span.CwaK9')
             for i in range(10):
+                button = driver.find_element_by_css_selector('span.CwaK9')
                 button.click()   
                 scrolldown()
                 i = i+1
