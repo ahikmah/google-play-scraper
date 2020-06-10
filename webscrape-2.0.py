@@ -25,7 +25,7 @@ driver = webdriver.Chrome(PATH)
 def exportfile (dataset):
     comment_list = list(dataset)
     df = pd.DataFrame(data={'comment':comment_list})
-    df.to_csv(namefile+len(dataset)+'.csv', mode='a', header=False, index=False)
+    df.to_csv(namefile+str(len(dataset))+'.csv', mode='a', header=False, index=False)
 
 def scrolldown():
     i = 0
@@ -38,7 +38,7 @@ def scrolldown():
 driver.get("https://play.google.com/store/apps/details?id=com.gojek.app&showAllReviews=true&hl=id")
 
 comment_set = set()
-
+cc = 1000
 try:
     root = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME,'LXrl4c'))
@@ -47,7 +47,7 @@ try:
     def dataload():
         try:
             i = 0
-            for i in range(20):
+            for i in range(50):
                 button = driver.find_element_by_css_selector('span.CwaK9')
                 button.click()   
                 scrolldown()
@@ -57,7 +57,7 @@ try:
                 i = 0
                 scrolldown()
                 scrolldown()
-                for i in range(20):
+                for i in range(50):
                     button = driver.find_element_by_css_selector('span.CwaK9')
                     button.click()  
                     scrolldown()
@@ -67,6 +67,7 @@ try:
                 
     while len(comment_set) < int(count):
         dataload()
+
         # get data
         comments = root.find_elements_by_class_name('UD7Dzf')
         for data in comments:
@@ -82,7 +83,14 @@ try:
             if comment.text in comment_set : continue
             comment_set.add(comment.text)
             print(len(comment_set),'data has been added successfully...')
-        dataload()
+            
+            if len(comment_set) == cc:
+                dataload()
+            elif len(comment_set) == int(count) : break
+            else : continue
+        cc = cc+1000
+
+        # backup data
         exportfile(comment_set)
     
     print('\n----------------------------------------------------\n'+
