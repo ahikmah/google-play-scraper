@@ -50,14 +50,14 @@ try:
         try:
             i = 0
             button = driver.find_element_by_css_selector('span.CwaK9')
-            for i in range(5):
+            for i in range(10):
                 button.click()   
                 scrolldown()
                 i = i+1
         except:
             i = 0
             scrolldown()
-            for i in range(5):
+            for i in range(10):
                 button = driver.find_element_by_css_selector('span.CwaK9')
                 button.click()  
                 scrolldown()
@@ -78,7 +78,6 @@ try:
             if comment.text in comment_set : continue
             comment_set.add(comment.text)
             print(len(comment_set),'data has been added successfully...')
-            if len(comment_set)>int(count):break
         
     exportfile(comment_set)
     
