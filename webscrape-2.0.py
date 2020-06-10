@@ -25,11 +25,11 @@ driver = webdriver.Chrome(PATH)
 def exportfile (dataset):
     comment_list = list(dataset)
     df = pd.DataFrame(data={'comment':comment_list})
-    df.to_csv(namefile+'.csv', mode='a', header=False, index=False)
+    df.to_csv(namefile+len(dataset)+'.csv', mode='a', header=False, index=False)
 
 def scrolldown():
     i = 0
-    for i in range(20):
+    for i in range(10):
         time.sleep(1)
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')               
         i = i+1
@@ -43,24 +43,30 @@ try:
     root = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME,'LXrl4c'))
     )
-         
-    while len(comment_set) < int(count):
+
+    def dataload():
         try:
             i = 0
-            for i in range(10):
+            for i in range(20):
                 button = driver.find_element_by_css_selector('span.CwaK9')
                 button.click()   
                 scrolldown()
                 i = i+1
         except:
-            i = 0
-            scrolldown()
-            for i in range(10):
-                button = driver.find_element_by_css_selector('span.CwaK9')
-                button.click()  
+            try:
+                i = 0
                 scrolldown()
-                i = i+1
-
+                scrolldown()
+                for i in range(20):
+                    button = driver.find_element_by_css_selector('span.CwaK9')
+                    button.click()  
+                    scrolldown()
+                    i = i+1
+            except:
+                scrolldown()
+                
+    while len(comment_set) < int(count):
+        dataload()
         # get data
         comments = root.find_elements_by_class_name('UD7Dzf')
         for data in comments:
@@ -76,8 +82,8 @@ try:
             if comment.text in comment_set : continue
             comment_set.add(comment.text)
             print(len(comment_set),'data has been added successfully...')
-        
-    exportfile(comment_set)
+        dataload()
+        exportfile(comment_set)
     
     print('\n----------------------------------------------------\n'+
             '\t\tWEB SCRAPING SUCCESS\n'+
