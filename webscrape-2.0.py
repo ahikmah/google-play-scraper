@@ -30,7 +30,7 @@ def exportfile (dataset):
 def scrolldown():
     i = 0
     for i in range(10):
-        time.sleep(1)
+        time.sleep(2)
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')               
         i = i+1
 # get URL
@@ -66,6 +66,7 @@ try:
                 scrolldown()
                 
     while len(comment_set) < int(count):
+        cc=0
         dataload()
 
         # get data
@@ -86,7 +87,8 @@ try:
             
             if len(comment_set) == cc:
                 dataload()
-            elif len(comment_set) == int(count) : break
+                # backup data
+                exportfile(comment_set)
             else : continue
         cc = cc+1000
 
